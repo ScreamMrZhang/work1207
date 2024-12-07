@@ -1,0 +1,27 @@
+name: Deploy1206 to Docker Nginx
+
+on:
+  push:
+    branches:
+      - master  # 或你的主分支
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+
+    - name: Scp to server and deploy
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.PRIVATE_KEY }}
+        port: 22
+        source: "./*.html ./*.js ./*.css ./images/*"
+        target: ${{ secrets.SERVER_TARGET }}
+
+        
