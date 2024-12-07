@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<   img src>
+</body>
+<script>
+    var str = '<img class="foo bar" id = "  baz" style =   "   background: red;color: white" src="abc.png" alt="图片"></img>';
+    var body = document.querySelector("body");
+    body.innerHTML=str;
+
+    function getDom(string){
+        //获取tagName
+        var r1 = /<\/(\w+)>/g;
+        //拿到</xxx>标签组
+        var match = string.match(r1);
+        var strHtml = null;
+        var result = {};
+
+        for (let i = 0; i < match.length; i++) {
+            //去除标签里面的<>还有/
+            strHtml=match[i].replace(/[<>\/]+/g,"");
+            //赋值给tagName
+            result.tagName=strHtml;
+            var attrs={};
+            var r2 = /(\w+)\s*=\s*"(.*?)"/g;
+            //拿到=左右的属性名和属性值
+            var attrArray = string.match(r2);
+            for (let j = 0; j < attrArray.length; j++) {
+                var match1 = attrArray[j].match((/^(\w+)\s*=\s*"(.*?)"$/));
+                var key = match1[1];
+                if (key==="class")
+                    key="className";
+                var value = match1[2].trim();
+                attrs[key] = value;
+            }
+            result.attrs=attrs;
+            // console.log(attrArray);
+
+
+        }
+        return result;
+    }
+
+    console.log(getDom(str));
+
+
+</script>
+</html>

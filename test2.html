@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自己编写base64</title>
+    <style>
+        #text64{
+            width: 800px;
+            height: 300px;
+        }
+        .btnDiv{
+            width: 800px;
+        }
+        #btn32 ,#deCode32{
+            margin-left: 5px;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+<h1>输入一个字符串我帮你base64/32加密解密</h1>
+<textarea id="text64" ></textarea><br>
+<div class="btnDiv">
+    <button id="btn64" onclick="getTextTo64()">base64编码</button>
+    <button id="deCode64" onclick="get64ToText()">base64解码</button>
+    <button id="btn32" onclick="getTextTo32()">base32编码</button>
+    <button id="deCode32" onclick="get32ToText()">base32解码</button>
+</div>
+
+</body>
+<script>
+    function myBase64(content) {
+        var arr = [];
+        var base64 ="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+        var res = "";
+
+        for (let i = 0; i < content.length; i++) {
+            var binCode = content[i].charCodeAt().toString(2).replace(/^/,'0000000').slice(-8);
+            arr.push(binCode);
+        }
+        var binCodeStr = arr.join("");
+        var binCodeStr2 = binCodeStr;
+        if (binCodeStr.length%6 != 0)
+            binCodeStr2 = binCodeStr+("0").repeat(6-(binCodeStr.length%6));
+        var str2List = binCodeStr2.match(/[01]{6}/g);
+        for (let i = 0; i < str2List.length; i++) {
+            var index = parseInt(str2List[i],2);
+            res += base64[index];
+        }
+
+        if (res.length%8 != 0){
+            res= res+("=").repeat(8-(res.length%8));
+        }
+        return res;
+    }
+
+    console.log(myBase64("Java"));
+    
+    function deCodeBase64(content) {
+        var base64 ="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+        //处理多的空格
+        var deleteEq = content.replace(/[=]+$/g,'');
+        var str2List=[];
+        var res="";
+        for (let i = 0; i < deleteEq.length; i++) {
+            //拿到索引下标，然后补成6位数
+            var binCodeStr6 = base64.indexOf(deleteEq[i]).toString(2)+"";
+            str2List.push(binCodeStr6.replace(/^/,'00000').slice(-6));
+        }
+        //组成了6的倍数的字符串
+        var binCodeStr = str2List.join("");
+        var str8List = binCodeStr.match(/[01]{8}/g);
+        for (let i = 0; i < str8List.length; i++) {
+            res+=String.fromCharCode(parseInt(str8List[i],2));
+        }
+        return res;
+    }
+
+
+    function myBase32(content) {
+        var arr = [];
+        var base64 ="ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+        var res = "";
+
+        for (let i = 0; i < content.length; i++) {
+            var binCode = content[i].charCodeAt().toString(2).replace(/^/,'0000000').slice(-8);
+            arr.push(binCode);
+        }
+        var binCodeStr = arr.join("");
+        var binCodeStr2 = binCodeStr;
+        if (binCodeStr.length%5 != 0)
+            binCodeStr2 = binCodeStr+("0").repeat(5-(binCodeStr.length%5));
+        var str2List = binCodeStr2.match(/[01]{5}/g);
+        for (let i = 0; i < str2List.length; i++) {
+            var index = parseInt(str2List[i],2);
+            res += base64[index];
+        }
+
+        if (res.length%8 != 0){
+            res= res+("=").repeat(8-(res.length%8));
+        }
+        return res;
+    }
+
+    console.log(myBase32("Java"));
+
+    function deCodeBase32(content) {
+        var base64 ="ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+        //处理多的空格
+        var deleteEq = content.replace(/[=]+$/g,'');
+        var str2List=[];
+        var res="";
+        for (let i = 0; i < deleteEq.length; i++) {
+            //拿到索引下标，然后补成5位数
+            var binCodeStr6 = base64.indexOf(deleteEq[i]).toString(2)+"";
+            str2List.push(binCodeStr6.replace(/^/,'0000').slice(-5));
+        }
+        //组成了5的倍数的字符串
+        var binCodeStr = str2List.join("");
+        var str8List = binCodeStr.match(/[01]{8}/g);
+        for (let i = 0; i < str8List.length; i++) {
+            res+=String.fromCharCode(parseInt(str8List[i],2));
+        }
+        return res;
+    }
+
+    console.log(deCodeBase64("SmF2YQ"));
+
+
+    function getTextTo64(){
+        var text = document.getElementById("text64");
+        var textValue = text.value;
+        var base64 = myBase64(textValue);
+        text.value=base64;
+    }
+
+    function get64ToText(){
+        var text = document.getElementById("text64");
+        var textValue = text.value;
+        var base64 = deCodeBase64(textValue);
+        text.value=base64;
+    }
+
+
+    function getTextTo32(){
+        var text = document.getElementById("text64");
+        var textValue = text.value;
+        var base64 = myBase32(textValue);
+        text.value=base64;
+    }
+
+    function get32ToText(){
+        var text = document.getElementById("text64");
+        var textValue = text.value;
+        var base64 = deCodeBase32(textValue);
+        text.value=base64;
+    }
+</script>
+</html>

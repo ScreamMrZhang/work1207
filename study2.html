@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>创建dom元素</title>
+    <style>
+
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <h1 class="child1">1</h1>
+    <h1 class="child2">2</h1>
+</div>
+<button onclick="removeDiv()">删除div</button>
+    <div>
+        第一个元素
+        <img src="../work1206/images/goodafternoon.jpg">
+    </div>
+    <div class="container">
+
+    </div>
+
+</body>
+<script>
+    //获取页面上的元素
+    var imageElement = document.querySelector("div");
+    var createImage = document.createElement("img");
+    console.log(imageElement.nodeType === createImage.nodeType);
+
+    //创建节点并追加到该节点子最后
+    createImage.src="../work1206/images/goodmorning.jpg";
+    var body = document.querySelector("body");
+    body.appendChild(createImage);
+
+    //克隆节点
+    //dom元素.cloneNodes(是否包含后代节点)  -true 包含  -<空> 不包含
+    document.body.appendChild(imageElement.cloneNode(true));
+
+    //在任何元素上都可以使用appendChild方法
+    //作用是在该元素的里面追加一个元素
+    var container = document.querySelector(".container");
+    container.appendChild(imageElement.cloneNode(true));
+    container.appendChild(createImage);
+
+
+    //父节点.insertBefore(插入元素,插入子节点之前)
+    var wrapper = document.querySelector(".wrapper");
+    var createDiv = document.createElement("div");
+    createDiv.style="height: 100px; background:pink";
+    wrapper.insertBefore(createDiv,wrapper.children[0]);
+
+    //删除页面上的元素节点
+    //清空某个元素的所有子节点 元素.innerHtml=""; 元素.innerText="";
+    // document.body.innerHTML="";
+
+    function removeDiv() {
+        wrapper.removeChild(createDiv);     //爸爸干掉儿子
+        wrapper.remove();                   //自己干掉自己
+    }
+
+    function replaceElement(){
+        wrapper.replaceChild(createDiv,createImage);
+    }
+
+    /*
+    样式操作
+    element.classList.add(被添加的类名);
+    element.classList.remove(被删除的类名);
+    element.classList.contains(类名);     //判断传入的类名是不是在class中
+    element.classList.toggle(被切换的类名);
+    element.classList.replace(旧类名,新类名);
+
+    创建节点
+    document.createElement(标签名);
+    目标元素.cloneNode(是否包含后代节点 --true);
+    插入节点到页面
+    parentElement.appendChild(newElement);
+    parentElement.insertBefore(newElement,参考元素);
+    parentElement.replaceChild(newElement,被替换的元素);
+    删除元素
+    parentElement.removeChild(被删除的元素);
+    被删除的元素.remove();
+     */
+
+
+
+
+
+
+
+</script>
+</html>
