@@ -1,0 +1,16 @@
+base {
+    width: 400px;
+
+}
+base1 {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+}
+
+.a {
+    background-color: lightblue;
+}
+.b{
+    background-color: lightgreen;
+}
