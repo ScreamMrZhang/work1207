@@ -1,4 +1,4 @@
-name: Deploy1206 to Docker Nginx
+name: Deploy1207 to Docker Nginx
 
 on:
   push:
@@ -21,7 +21,7 @@ jobs:
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.PRIVATE_KEY }}
         port: 22
-        source: "./*.html ./*.js ./*.css"
+        source: "./*"
         target: ${{ secrets.SERVER_TARGET }}
 
         
