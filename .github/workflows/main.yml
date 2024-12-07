@@ -21,7 +21,7 @@ jobs:
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.PRIVATE_KEY }}
         port: 22
-        source: "./*.html ./*.js ./*.css ./images/*"
+        source: "./*.html ./*.js ./*.css"
         target: ${{ secrets.SERVER_TARGET }}
 
         
