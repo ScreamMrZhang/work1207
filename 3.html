@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>实现10进制数转二进制字符串的函数</h1>
+<script>
+    function decimalToBinary(decimal) {
+        if (decimal === 0) return "0";  // 特殊情况处理
+        let binary = "";
+        while (decimal > 0) {
+            binary = (decimal % 2) + binary;  // 取余并拼接
+            decimal = Math.floor(decimal / 2);  // 整数除以 2
+        }
+        return binary;
+    }
+    console.log(decimalToBinary(10));
+    console.log(decimalToBinary(255));
+    console.log(decimalToBinary(0));
+</script>
+</body>
+</html>

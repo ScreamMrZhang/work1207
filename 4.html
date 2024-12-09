@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>实现2进制字符串转10进制数的函数</h1>
+<script>
+    function binaryToDecimal(binary) {
+        let decimal = 0;
+        let power = 0;
+        for (let i = binary.length - 1; i >= 0; i--) {
+            if (binary[i] === '1') {
+                decimal += Math.pow(2, power);  // 计算 2 的幂并累加
+            }
+            power++;
+        }
+        return decimal;
+    }
+
+    console.log(binaryToDecimal("1010"));  // 输出 10
+    console.log(binaryToDecimal("11111111"));  // 输出 255
+    console.log(binaryToDecimal("0"));  // 输出 0
+</script>
+</body>
+</html>
